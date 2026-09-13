@@ -8,7 +8,7 @@ import { UpdateCourseModel } from "../models/UpdateCourseModel";
 import { CourseType, DBType } from "../db/db";
 import { HTTP_STATUSES } from "../utils";
 
-// Information for client
+// Information for client (without studentsCount)
 export const getCourseToViewModel = (dbCourse: CourseType): CourseViewModel => {
     return {
         id: dbCourse.id,

@@ -6,6 +6,7 @@ import { getInterestingRouter } from "./routes/getInterestingRouter";
 
 export const app: Express = express();
 
+// Middleware
 app.use(express.json());
 
 app.use('/courses', getCoursesRouter(db));
