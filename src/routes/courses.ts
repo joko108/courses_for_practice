@@ -8,6 +8,7 @@ import { UpdateCourseModel } from "../models/UpdateCourseModel";
 import { CourseType, DBType } from "../db/db";
 import { HTTP_STATUSES } from "../utils";
 
+// Information for client
 export const getCourseToViewModel = (dbCourse: CourseType): CourseViewModel => {
     return {
         id: dbCourse.id,
@@ -15,6 +16,7 @@ export const getCourseToViewModel = (dbCourse: CourseType): CourseViewModel => {
     };
 };
 
+// Router
 export const getCoursesRouter = (db: DBType) => {
     const router: Router = express.Router();
 
