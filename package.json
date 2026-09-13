@@ -1,0 +1,38 @@
+{
+  "name": "titles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --inspect dist/index.js",
+    "test": "jest",
+    "watch": "tsc -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.13.1",
+      "onFail": "download"
+    }
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/supertest": "^7.2.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.12",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.3.0",
+    "nodemon": "^3.1.14"
+  }
+}
