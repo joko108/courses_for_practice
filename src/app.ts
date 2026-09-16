@@ -8,6 +8,7 @@ import {getUsersCoursesBindingsRouter} from "./features/users-courses-bindings/u
 
 export const app: Express = express();
 
+// URL paths
 export const RouterPaths = {
     courses: '/courses',
     users: '/users',
@@ -18,6 +19,7 @@ export const RouterPaths = {
 // Parse JSON
 app.use(express.json());
 
+// Routers
 app.use(RouterPaths.courses, getCoursesRouter(db));
 app.use(RouterPaths.users, getUsersRouter(db));
 app.use(RouterPaths.usersCoursesBindings, getUsersCoursesBindingsRouter(db));
