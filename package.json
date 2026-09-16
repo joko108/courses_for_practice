@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --inspect dist/index.js",
-    "test": "jest",
+    "test-e2e": "jest --detectOpenHandles --no-cache --watchAll --config ./__tests__/jest-e2e.config.js",
     "watch": "tsc -w"
   },
   "keywords": [],

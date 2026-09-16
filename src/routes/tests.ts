@@ -8,6 +8,8 @@ export const getTestsRouter = (db: DBType) => {
     // Clear database for e2e-tests
     router.delete('/data', (_req: Request, res: Response) => {
         db.courses = [];
+        db.users = [];
+        db.studentCourseBinding = [];
         res.sendStatus(HTTP_STATUSES.NO_CONTENT_204);
     });
 

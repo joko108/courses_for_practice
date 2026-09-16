@@ -1,0 +1,122 @@
+import request from 'supertest';
+import { app, RouterPaths } from "../../src/app";
+import { HTTP_STATUSES } from "../../src/utils";
+import { CreateUserModel } from "../../src/features/users/models/CreateUserModel";
+import { UpdateUserModel } from "../../src/features/users/models/UpdateUserModel";
+import { usersTestsManager } from "../utils/UsersTestsManager";
+
+const getRequest = () => {
+    return request(app);
+};
+
+describe('tests for /users', () => {
+    beforeAll(async () => {
+        await getRequest().delete(`${RouterPaths.__test__}/data`)
+    });
+
+    it('should return 200 and empty array', async () => {
+        await request(app)
+            .get(RouterPaths.users)
+            .expect(HTTP_STATUSES.OK_200, [])
+    });
+
+    it('should return 404 for not existing entity', async () => {
+        await request(app)
+            .get(`${RouterPaths.users}/1`)
+            .expect(HTTP_STATUSES.NOT_FOUND_404)
+    });
+
+    it(`shouldn't create entity with incorrect input data`, async () => {
+        const data: CreateUserModel = { userName: '' };
+
+        await usersTestsManager.createUser(data, HTTP_STATUSES.BAD_REQUEST_400)
+
+        await request(app)
+            .get(RouterPaths.users)
+            .expect(HTTP_STATUSES.OK_200, [])
+    });
+
+    let createdEntity1: any = null;
+    it(`should create entity with correct input data`, async () => {
+        const data: CreateUserModel = { userName: 'dimych' };
+
+        const { createdEntity } = await usersTestsManager.createUser(data);
+
+        createdEntity1 = createdEntity;
+
+        await request(app)
+            .get(RouterPaths.users)
+            .expect(HTTP_STATUSES.OK_200, [createdEntity1])
+    });
+
+    let createdEntity2: any = null;
+    it(`create one more entity`, async () => {
+        const data: CreateUserModel = { userName: 'Ivan' };
+
+        const { createdEntity } = await usersTestsManager.createUser(data);
+
+        createdEntity2 = createdEntity;
+
+        await request(app)
+            .get(RouterPaths.users)
+            .expect(HTTP_STATUSES.OK_200, [createdEntity1, createdEntity2])
+    });
+
+    it(`shouldn't update entity with incorrect input data`, async () => {
+        const data: UpdateUserModel = { userName: '' };
+
+        await request(app)
+            .put(`${RouterPaths.users}/${createdEntity1.id}`)
+            .send(data)
+            .expect(HTTP_STATUSES.BAD_REQUEST_400)
+
+        await request(app)
+            .get(`${RouterPaths.users}/${createdEntity1.id}`)
+            .expect(HTTP_STATUSES.OK_200, createdEntity1)
+    });
+
+    it(`shouldn't update entity that not exist`, async () => {
+        await request(app)
+            .put(`${RouterPaths.users}/${-100}` )
+            .send({ userName: 'Andrey' })
+            .expect(HTTP_STATUSES.BAD_REQUEST_400)
+    });
+
+    it(`should update entity with correct input data`, async () => {
+        const data: UpdateUserModel = { userName: 'DIMYCH' };
+
+        await request(app)
+            .put(`${RouterPaths.users}/${createdEntity1.id}`)
+            .send(data)
+            .expect(HTTP_STATUSES.NO_CONTENT_204)
+
+        await request(app)
+            .get(`${RouterPaths.users}/${createdEntity1.id}`)
+            .expect(HTTP_STATUSES.OK_200, {
+                ...createdEntity1,
+                userName: data.userName
+            })
+
+        await request(app)
+            .get(`${RouterPaths.users}/${createdEntity2.id}`)
+            .expect(HTTP_STATUSES.OK_200, createdEntity2)
+    });
+
+    it(`should delete both courses`, async () => {
+        await request(app)
+            .delete(`${RouterPaths.users}/${createdEntity1.id}`)
+            .expect(HTTP_STATUSES.NO_CONTENT_204)
+
+        await request(app)
+            .delete(`${RouterPaths.users}/${createdEntity2.id}`)
+            .expect(HTTP_STATUSES.NO_CONTENT_204)
+
+        await request(app)
+            .get(`${RouterPaths.users}/${createdEntity2.id}`)
+            .expect(HTTP_STATUSES.NOT_FOUND_404)
+
+        await request(app)
+            .get(RouterPaths.users)
+            .expect(HTTP_STATUSES.OK_200, [])
+    });
+});
