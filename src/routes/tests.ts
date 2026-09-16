@@ -9,7 +9,7 @@ export const getTestsRouter = (db: DBType) => {
     router.delete('/data', (_req: Request, res: Response) => {
         db.courses = [];
         db.users = [];
-        db.studentCourseBinding = [];
+        db.userCourseBinding = [];
         res.sendStatus(HTTP_STATUSES.NO_CONTENT_204);
     });
 

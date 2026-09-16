@@ -9,8 +9,8 @@ export type UserType = {
     userName: string
 };
 
-export type StudentCourseBinding = {
-    studentId: number;
+export type UserCourseBindingType = {
+    userId: number;
     courseId: number;
     date: Date
 };
@@ -18,7 +18,7 @@ export type StudentCourseBinding = {
 export type DBType = {
     courses: CourseType[];
     users: UserType[];
-    studentCourseBinding: StudentCourseBinding[]
+    userCourseBinding: UserCourseBindingType[]
 };
 
 export const db: DBType = {
@@ -32,9 +32,9 @@ export const db: DBType = {
         { id: 1, userName: 'dymsch' },
         { id: 2, userName: 'ivan' },
     ],
-    studentCourseBinding: [
-        { studentId: 1, courseId: 1, date: new Date(2022, 10, 1) },
-        { studentId: 1, courseId: 2, date: new Date(2022, 10, 1) },
-        { studentId: 2, courseId: 2, date: new Date(2022, 10, 1) },
+    userCourseBinding: [
+        { userId: 1, courseId: 1, date: new Date(2022, 10, 1) },
+        { userId: 1, courseId: 2, date: new Date(2022, 10, 1) },
+        { userId: 2, courseId: 2, date: new Date(2022, 10, 1) },
     ]
 };
