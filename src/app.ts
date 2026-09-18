@@ -4,7 +4,7 @@ import { getTestsRouter } from "./routes/tests";
 import { db } from "./db/db";
 import { getInterestingRouter } from "./routes/getInterestingRouter";
 import { getUsersRouter } from "./features/users/users.router";
-import {getUsersCoursesBindingsRouter} from "./features/users-courses-bindings/users-courses-bindings.router";
+import { getUsersCoursesBindingsRouter } from "./features/users-courses-bindings/users-courses-bindings.router";
 
 export const app: Express = express();
 
